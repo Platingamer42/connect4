@@ -15,9 +15,9 @@ class CLICOntroller(IOController):
                 inp = int(inp)              
         return inp
     
-    def displayBoard(self, board):
+    def display_board(self, board):
         print(flip(board, 0))
     
-    def handleWin(self, turn):
+    def handle_win(self, turn):
         print("Spieler {} gewinnt!".format(self.turn + 1))
 

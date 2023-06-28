@@ -7,9 +7,9 @@ class IOController:
         pass
     
     @abstractmethod
-    def handleWin(self, turn):
+    def handle_win(self, turn):
         pass
     
     @abstractmethod
-    def displayBoard(self, board):
+    def display_board(self, board):
         pass

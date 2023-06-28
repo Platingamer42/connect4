@@ -33,7 +33,7 @@ class GUI:
         pygame.time.wait(3000)
     
     
-    def getInput(self, turn) -> int:
+    def get_input(self, turn) -> int:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -87,6 +87,11 @@ class GUI:
                 # turn = turn % 2
         return -1
         
+    ### function to draw the menu:
+    def draw_menu(self, board):
+        pygame.fill(self.screen, BLACK)
+            
+    
     ### function to draw the board
     def draw_board(self, board):
         for c in range(self.COLUMN_COUNT):
