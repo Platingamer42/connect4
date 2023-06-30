@@ -2,6 +2,8 @@ from controller.IOController import IOController
 from numpy import flip
 
 class CLICOntroller(IOController):
+    def init(self, logging=False):
+        return super().init(logging)
     def handleInput(self, turn: int):
         super().handleInput(turn=turn)
         inp = -1 #so that the loop runs once
@@ -19,5 +21,5 @@ class CLICOntroller(IOController):
         print(flip(board, 0))
     
     def handle_win(self, turn):
-        print("Spieler {} gewinnt!".format(self.turn + 1))
+        print("Spieler {} gewinnt!".format(turn + 1))
 

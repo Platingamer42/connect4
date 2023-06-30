@@ -3,12 +3,20 @@ import random
 from GameWrapper import Functions
 
 class AI(Functions):
-    def getBest(self, board):
+    difficulty = 100
+    
+    def get_next_move(self, board):
+        if random.randint(0, 10) > self.difficulty:
+            return random.randint(0, self.COLUMN_COUNT-1)
+        else:
+            col, _ = self.getBest(board)
+        return col
+    
+    def getBest(self, board) -> int:
         col, minimax_score = self.minimax(board, 5, -math.inf, math.inf, True)
-        if self.check_valid_location(board, col):
-			#pygame.time.wait(500)
-            row = self.get_next_open_row(board, col)
-            self.drop_piece(board, row, col, self.AI_PIECE)
+        #if self.check_valid_location(board, col):
+        #    row = self.get_next_open_row(board, col)
+        #    self.drop_piece(board, row, col, self.AI_PIECE)
         return col, minimax_score
 
     def evaluate_window(self, window, piece):
@@ -75,9 +83,9 @@ class AI(Functions):
         if depth == 0 or is_terminal:
             if is_terminal:
                 if self.check_win(board, self.AI):
-                    return (None, 100000000000000)
+                    return (None, math.inf)
                 elif self.check_win(board, self.PLAYER):
-                    return (None, -10000000000000)
+                    return (None, -math.inf)
                 else: # Game is over, no more valid moves
                     return (None, 0)
             else: # Depth is zero
@@ -120,22 +128,6 @@ class AI(Functions):
             if self.check_valid_location(board, col):
                 valid_locations.append(col)
         return valid_locations
-
-    def pick_best_move(self, board, piece):
-
-        valid_locations = self.get_validation_locations(board)
-        best_score = -10000
-        best_col = random.choice(valid_locations)
-        for col in valid_locations:
-            row = self.get_next_open_row(board, col)
-            temp_board = board.copy()
-            self.drop_piece(temp_board, row, col, piece)
-            score = self.score_position(temp_board, piece)
-            if score > best_score:
-                best_score = score
-                best_col = col
-
-        return best_col
     
     def drop_piece(self, board, row, col, piece):
 	    board[row][col] = piece
