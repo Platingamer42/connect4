@@ -1,9 +1,7 @@
 import gui.colors as colors
 import pygame
 
-class GameBoard:    
-    cells = []
-    
+class GameBoard:        
     #define our screen size
     SQUARESIZE = 100
     RADIUS = int(SQUARESIZE/2 - 5)

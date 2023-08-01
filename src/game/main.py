@@ -28,9 +28,8 @@ class Main(Functions):
         self.ai = Ai.AI()
         
         self.create_board()
-        if self.loop():
+        while self.loop():
             self.restart_game()
-            self.loop()
         
         #game closes -> save file
         self.save_stats_to_file()
@@ -55,10 +54,10 @@ class Main(Functions):
         
     #saves the stats to file
     def save_stats_to_file(self):
-        with  open(r'src\game\stats.json', 'w') as json_file:
+        with  open(r'src\game\data\stats.json', 'w') as json_file:
             json.dump(self.stats, json_file)
     def load_stats_from_file(self):
-        with open(r'src\game\stats.json', 'r') as f:
+        with open(r'src\game\data\stats.json', 'r') as f:
             self.stats = json.load(f)
             
     def restart_game(self):
@@ -69,7 +68,9 @@ class Main(Functions):
 
     
     def set_starting_player(self):
-         self.turn = randint(0, 1)
+        """Randomly picks the starting player by choosing 0 or 1
+        """
+        self.turn = randint(0, 1)
     
     #starts the game_loop
     def loop(self) -> int:
@@ -91,6 +92,7 @@ class Main(Functions):
             #GUI returns -1 if there was no input
             if selection == -1:
                 continue
+            
             if self.check_valid_location(self.board, selection):
                 row = self.next_free_row(self.board, selection)
                 self.drop_piece(self.board, row, selection, self.turn+1)

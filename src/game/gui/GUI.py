@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from gui.UI_Elements import UI_Element, Button, Label
 
 class GUI:  
+    version = 0.8 #TODO auslagern?
     SQUARESIZE = 100
     COLUMN_COUNT = 0
     ROW_COUNT = 0
@@ -37,6 +38,9 @@ class GUI:
                 
         self.screen = pygame.display.set_mode(size)
         
+        ##set name:
+        pygame.display.set_caption("Connect4 " + str(self.version))
+        
         #INIT THE GAMEBOARD
         self.game_board = GameBoard(column_count=self.COLUMN_COUNT, row_count=self.ROW_COUNT)
         
@@ -65,11 +69,13 @@ class GUI:
     def get_input(self, turn) -> int:
         pygame.event.clear()
         self.fps_clock.tick(self.fps)
+        
         for event in pygame.event.get():
             #print(self.fps_clock.get_fps())
             if event.type == pygame.QUIT:
                 sys.exit()
     
+            #moves the floating piece with the mouse. TODO: Own object?
             if event.type == pygame.MOUSEMOTION:
                 pygame.draw.rect(self.screen, colors.BLACK, (0,0, self.width, self.SQUARESIZE))
                 posx = event.pos[0]
@@ -79,6 +85,7 @@ class GUI:
                     pygame.draw.circle(self.screen, colors.YELLOW, (posx, int(self.SQUARESIZE/2)), self.RADIUS)
             pygame.display.update()
     
+            #clears the screen where the piece was floating earlier (whole row with heiht of SQUARESIZE gets painted black)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pygame.draw.rect(self.screen, colors.BLACK, (0,0, self.width, self.SQUARESIZE))
                 #print(event.pos)
@@ -154,7 +161,12 @@ class GUI:
         self.IN_MENU = False
         self.screen.fill(colors.BLACK)
         self.ui_elements.clear()
+        
+        #TEST?
+        self.screen.blit(self.game_board.board_surface, (0, 0))
         pygame.display.update()
+        
+        #pygame.display.update()
         
     def start_pressed(self) -> bool:
         self.exit_menu()

@@ -3,7 +3,7 @@ import random
 from GameWrapper import Functions
 
 class AI(Functions):
-    difficulty = 100
+    difficulty = 10
     
     def get_next_move(self, board):
         if random.randint(0, 10) > self.difficulty:
